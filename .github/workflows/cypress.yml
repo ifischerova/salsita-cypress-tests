@@ -23,7 +23,7 @@ jobs:
         with:
           start: npm start
           browser: chrome
-          wait-on: 'http://127.0.0.1/:3000'
+          wait-on: 'http://127.0.0.1:3000'
           record: true
           parallel: true
         env:
