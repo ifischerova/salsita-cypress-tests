@@ -2,6 +2,7 @@ describe('Test Salsita testing page', () => {
     it('Open Salsita testing page', () => {
         cy.visit('https://salsita-qa-homework.netlify.app/')
     })
+    // ** Code page **
     it('Click Enter to get to Code page',() => {
         cy
           .get('.enterButton')
@@ -17,26 +18,28 @@ describe('Test Salsita testing page', () => {
             const secretValue = $hiddenInput.val();
             cy
               .get('#code').type(secretValue)
+              .should('exist')
               .should('have.value', secretValue)
         });
     })
     it('Check the checkbox to confirm you are robot',() => {
-        cy.get('#isRobot')
+        cy.get('#isRobot').should('exist')
           .should('not.be.checked')
           .check()
           .should('be.checked')
     })
     it('Submit the form to get to the Lists page',() => {
         cy
-          .get('form')
+          .get('form').should('exist')
           .submit()
           .url().should('include', '/lists')
-          .get('#summary')
+          .get('#summary').should('exist')
           .should('be.visible')
     })
+    // ** List page **
     it('Check that Famous quotes part is visible and contains proper quotes',() => {
         cy
-            .get('[qa-id="Famous"]')
+            .get('[qa-id="Famous"]').should('exist')
             .should('be.visible')
             // Find all the <li> elements with quotes.
             .get('[qa-id="Famous"] li').should('have.length', 5).each(($li) => {
@@ -55,7 +58,7 @@ describe('Test Salsita testing page', () => {
     })
     it('Check that Awesome quotes part is visible and contains quotes',() => {
         cy
-          .get('[qa-id="Awesome"]')
+          .get('[qa-id="Awesome"]').should('exist')
           .should('be.visible')
           .get('[qa-id="Awesome"] li').should('have.length', 5).each(($li) => {
             cy.wrap($li).find('span:first').invoke('text')
@@ -70,16 +73,15 @@ describe('Test Salsita testing page', () => {
     it('Sum up the scores at quotes and check is equal as Total score. ',() => {
         cy.get('.score').then(($scores) => {
             const scoreTexts  = $scores.map((index, $score) => {
-              // Inside the callback function, you can access the text of each element separately
               return Cypress.$($score).text();
             }).get();
 
-            // Filter out empty score texts and parse them into integers
+            // Filter out empty score texts and parse them into integers.
             const scores = scoreTexts
                 .filter((scoreText) => scoreText.trim() !== '')
                 .map((scoreText) => parseInt(scoreText));
             
-            // Calculate the sum of quote scores
+            // Calculate the sum of quote scores.
             const quoteScore = scores.reduce((acc, curr) => acc + curr, 0);
             
             expect(quoteScore).to.be.a('number');
