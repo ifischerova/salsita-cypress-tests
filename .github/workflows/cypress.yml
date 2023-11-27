@@ -7,7 +7,6 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.17.1-chrome106-ff105-edge
     strategy:
       fail-fast: false
       matrix:
@@ -16,15 +15,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          runTests: false
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           start: npm start
+          browser: chrome
           record: true
           parallel: true
         env:
