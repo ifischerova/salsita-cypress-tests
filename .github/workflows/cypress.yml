@@ -15,10 +15,9 @@ jobs:
         with:
           start: npm start
           browser: chrome
-          wait-on: 'http://localhost:3000'
+          wait-on: 'http://[::1]:3000'
           record: true
           parallel: true
-          run: pkill -f "npm start" || true
         env:
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
