@@ -18,8 +18,8 @@ jobs:
           wait-on: 'http://localhost:3000'
           record: true
           parallel: true
+          run: pkill -f "npm start" || true
         env:
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Stop localhost
-        run: pkill -f "npm start" || true 
+
